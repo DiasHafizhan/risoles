@@ -1,0 +1,26 @@
+# Abaikan file dan direktori yang tidak perlu dalam repositori
+
+# Abaikan semua file log
+*.log
+
+# Abaikan semua file .env
+.env
+
+# Abaikan folder node_modules dalam proyek Node.js
+node_modules/
+
+# Abaikan file sementara editor (misal: VS Code, Sublime, dll.)
+*.swp
+*.tmp
+.vscode/
+
+# Abaikan folder build atau dist dalam proyek JavaScript
+build/
+dist/
+
+# Abaikan file database lokal
+*.sqlite
+
+# Abaikan file dan folder sementara sistem operasi
+.DS_Store  # MacOS
+Thumbs.db  # Windows
