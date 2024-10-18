@@ -1,3 +1,19 @@
+<?php 
+
+require "../function.php";
+
+if(isset($_POST['submit'])){
+  if(register($_POST) > 0){
+    header('location: login.php');
+  }
+}
+
+
+
+?>
+
+
+
 <!doctype html>
 <html lang="en" data-bs-theme="auto">
 
@@ -135,11 +151,11 @@
       <h1 class="h3 mb-3 fw-normal">Please Register</h1>
 
       <div class="form-floating">
-        <input type="email" class="form-control" name="username" id="floatingInput" placeholder="john doe">
-        <label for="floatingInput">Fullname</label>
+        <input type="text" class="form-control" name="username" id="floatingInput" placeholder="john doe">
+        <label for="floatingInput">Username</label>
       </div>
       <div class="form-floating">
-        <input type="email" class="form-control" name="username" id="floatingInput" placeholder="name@example.com">
+        <input type="email" class="form-control" name="email" id="floatingInput" placeholder="name@example.com">
         <label for="floatingInput">Email address</label>
       </div>
       <div class="form-floating">
@@ -153,7 +169,7 @@
           Remember me
         </label>
       </div>
-      <button class="btn btn-primary w-100 py-2" type="submit" name="submit">Sign in</button>
+      <button class="btn btn-primary w-100 py-2" type="submit" name="submit">Register</button>
     </form>
   </main>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

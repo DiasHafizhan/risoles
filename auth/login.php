@@ -5,15 +5,22 @@ session_start();
 require '../function.php';
 
 if (isset($_POST['submit'])) {
-  $username = $_POST['username'];
+  $email = $_POST['email'];
   $password = $_POST['password'];
 
-  $result = mysqli_query($con, "SELECT * FROM admin WHERE username = '$username'");
+  $result = mysqli_query($con, "SELECT * FROM users WHERE email = '$email'");
 
   if (mysqli_num_rows($result) === 1) {
     $row = mysqli_fetch_assoc($result);
-    if ($password === $row['password']) {
+    if (password_verify($password, $row["password"]) ) {
+      // session login
       $_SESSION['login'] = true;
+      $_SESSION['user'] = $row['kategori'];
+      
+      if($_SESSION['user'] === 'admin'){
+        header("location: ../admin.php");
+        exit;
+      }
       header("location: ../index.php");
       exit;
     }
@@ -166,7 +173,7 @@ if (isset($_POST['submit'])) {
       <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
       <div class="form-floating">
-        <input type="email" class="form-control" name="username" id="floatingInput" placeholder="name@example.com">
+        <input type="email" class="form-control" name="email" id="floatingInput" placeholder="name@example.com">
         <label for="floatingInput">Email address</label>
       </div>
       <div class="form-floating">
