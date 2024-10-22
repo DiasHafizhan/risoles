@@ -16,9 +16,9 @@ if (isset($_POST['submit'])) {
       // session login
       $_SESSION['login'] = true;
       $_SESSION['user'] = $row['kategori'];
-      
       if($_SESSION['user'] === 'admin'){
-        header("location: ../admin.php");
+        $_SESSION['pengguna'] = $email;
+        header("location: ../admin/");
         exit;
       }
       header("location: ../index.php");
