@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 
 // Memastikan user login terlebih dahulu
@@ -41,51 +42,15 @@ if ($query && mysqli_num_rows($query) > 0) {
 </head>
 
 <body>
-  <div class="w-full bg-red-600 sticky-top">
-    <div class="container py-2 flex justify-between items-center">
-      <h2 class="text-xl">
-        <a href="" class="text-black no-underline">HM Risoles</a>
-      </h2>
-
-      <div class="md:hidden block">
-        <button class="btn btn-primary text-center" type="button" data-bs-toggle="offcanvas"
-          data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-          <i class='bx bx-menu text-lg'></i>
-        </button>
-  
-        <div class="offcanvas offcanvas-end" style="width: 350px;" tabindex="-1" id="offcanvasRight"
-          aria-labelledby="offcanvasRightLabel">
-          <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasRightLabel">Hallo <?= $username ?></h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-          </div>
-          <div class="offcanvas-body">
-            ...
-          </div>
-        </div>
-      </div>
-
-
-
-
-      <div class="dropdown hidden md:block">
-        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-          <?php echo $username ?>
-        </button>
-        <ul class="dropdown-menu dropdown-menu-dark">
-          <li><a class="dropdown-item active" href="../auth/Logout.php">Logout</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
+  <?php include '../Component/admin/header.php' ?>
 
 
   <div class="container mt-3">
     <div class="row">
-      <div class="col-md-3 md:block hidden">.col-sm-6 .col-md-8</div>
-      <div class="col-md-9 bg-red-600">
+      <?php include '../Component/sidebar.php' ?>
+      <div class="col-md-9">
         <div class="card">
-          <h5 class="card-header">Featured</h5>
+          <h5 class="card-header">dashboard</h5>
           <div class="card-body">
             <h5 class="card-title">Special title treatment</h5>
             <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>

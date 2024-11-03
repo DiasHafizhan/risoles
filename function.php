@@ -7,6 +7,19 @@ $db = 'risoles';
 
 $con = mysqli_connect($Localhost, $root, $password, $db);
 
+
+function read($query){
+  global $con;
+
+  $result = mysqli_query($con, $query);
+  $rows = [];
+
+  while($row = mysqli_fetch_array($result)){
+    $rows[] = $row;
+  }
+  return $rows;
+}
+
 function register($data)
 {
   global $con;
@@ -30,6 +43,33 @@ function register($data)
   $password = password_hash($password, PASSWORD_DEFAULT);
 
   $query = "INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$password')";
+  mysqli_query($con, $query);
+
+  return mysqli_affected_rows($con);
+}
+
+function tambah($data)
+{
+  global $con;
+
+  $nameProduct = htmlspecialchars($data['product']);
+  $description = htmlspecialchars($data['description']);
+  $price = htmlspecialchars($data['price']);
+  $stock = htmlspecialchars($data['stock']);
+  $type = htmlspecialchars($data['type']);
+  $image = htmlspecialchars($data['image']);
+
+  $query = "INSERT INTO menu (name, description, price, stock, image, type) VALUES ('$nameProduct', '$description', $price, $stock, '$type', '$image')";
+
+  mysqli_query($con, $query);
+
+  return mysqli_affected_rows($con);
+}
+
+function hapus($id){
+  global $con;
+
+  $query = "DELETE FROM menu WHERE id = $id";
   mysqli_query($con, $query);
 
   return mysqli_affected_rows($con);

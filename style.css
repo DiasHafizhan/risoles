@@ -883,3 +883,13 @@ video {
     text-decoration-line: none;
   }
 }
+
+
+@media (min-width: 768px) {
+  .card-style{
+    width: 33%;
+  }
+  .button-card{
+    width: 45%;
+  }
+}
