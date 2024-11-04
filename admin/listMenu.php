@@ -67,7 +67,7 @@ $menu = read("SELECT * FROM menu");
               <div class="flex flex-wrap justify-between"> <!-- Flex wrapper untuk semua card -->
                 <?php foreach ($menu as $product): ?>
                   <div class="card mb-3 card-style"> <!-- Set width card dengan Tailwind -->
-                    <img src="../img/appetizer1.png" class="card-img-top" alt="...">
+                    <img src="../img/<?= $product['image'] ?>" class="card-img-top" alt="...">
                     <div class="card-body">
                       <h5 class="card-title"><?= $product['name'] ?></h5>
                       <p class="card-text overflow-hidden text-ellipsis whitespace-normal"

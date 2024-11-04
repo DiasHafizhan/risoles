@@ -42,6 +42,7 @@ if(isset($_POST['submit'])){
 
 
     <form method="POST" style="margin-bottom: 70px;">
+      <input type="hidden" value="<?= $product['id'] ?>" name="id">
       <div class="mb-3">
         <label for="product" class="form-label">Product Name</label>
         <input type="text" class="form-control" name="product" id="product" value="<?= $product['name'] ?>"

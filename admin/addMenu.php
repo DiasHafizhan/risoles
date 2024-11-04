@@ -26,10 +26,10 @@ if ($query && mysqli_num_rows($query) > 0) {
 }
 
 
-if(isset($_POST['submit'])){
-  if(tambah($_POST) > 0){
+if (isset($_POST['submit'])) {
+  if (tambah($_POST) > 0) {
     header('location: listMenu.php');
-  } else{
+  } else {
     echo "Gagal";
   }
 }
@@ -64,14 +64,15 @@ if(isset($_POST['submit'])){
     </h1>
 
 
-    <form method="POST" style="margin-bottom: 70px;">
+    <form method="POST" style="margin-bottom: 70px;" enctype="multipart/form-data">
       <div class="mb-3">
         <label for="product" class="form-label">Product Name</label>
         <input type="text" class="form-control" name="product" id="product" aria-describedby="emailHelp">
       </div>
       <div class="mb-3">
         <label for="description" class="form-label">Description</label>
-        <input type="text" class="form-control" name="description" id="description">
+        <textarea id="description" name="description" class="form-control" rows="4"
+          placeholder="Enter the description here..."></textarea>
       </div>
       <div class="mb-3">
         <label for="price" class="form-label">Price</label>
