@@ -23,31 +23,37 @@ function read($query)
 
 function register($data)
 {
-  global $con;
+    global $con;
 
-  $username = strtolower(stripcslashes($data['username']));
-  $email = mysqli_real_escape_string($con, $data['email']);
-  $password = mysqli_real_escape_string($con, $data['password']);
+    $nama = strtolower(stripcslashes($data['nama']));
+    $email = mysqli_real_escape_string($con, $data['email']);
+    $telp = strtolower(stripcslashes($data['telp']));
+    $password = mysqli_real_escape_string($con, $data['password']);
+    $password2 = mysqli_real_escape_string($con, $data['password2']);
 
-  // Melakukan query untuk mengecek apakah username atau email sudah terdaftar
-  $result = mysqli_query($con, "SELECT * FROM users WHERE email = '$email'");
+    // Cek apakah email sudah terdaftar
+    $result = mysqli_query($con, "SELECT * FROM users WHERE email = '$email'");
+    if (mysqli_fetch_assoc($result)) {
+        echo "<script>alert('Email sudah terdaftar');</script>";
+        return false;
+    }
 
-  if (mysqli_fetch_assoc($result)) {
-    // Jika username atau email ditemukan, tampilkan alert
-    echo "
-      <script>
-        alert('Username atau Email sudah terdaftar');
-      </script>
-    ";
-  }
+    // Cek konfirmasi password
+    if ($password !== $password2) {
+        echo "<script>alert('Konfirmasi password tidak cocok');</script>";
+        return false;
+    }
 
-  $password = password_hash($password, PASSWORD_DEFAULT);
+    // Hash password
+    $password = password_hash($password, PASSWORD_DEFAULT);
 
-  $query = "INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$password')";
-  mysqli_query($con, $query);
+    // Query insert tanpa kolom confirmPassword
+    $query = "INSERT INTO users (nama, email, telp, password) VALUES ('$nama', '$email', '$telp', '$password')";
+    mysqli_query($con, $query);
 
-  return mysqli_affected_rows($con);
+    return mysqli_affected_rows($con);
 }
+
 
 function tambah($data)
 {
