@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
 
 $isLoggedIn = isset($_SESSION["login"]) && $_SESSION["login"] === true;
 
@@ -22,9 +24,6 @@ $isLoggedIn = isset($_SESSION["login"]) && $_SESSION["login"] === true;
         <li>
           <a href="infoKami.php" class="no-underline text-black text-lg">Info Kami</a>
         </li>
-        <li>
-          <a href="" class="no-underline text-black text-lg">Store</a>
-        </li>
       <?php else: ?>
         <li>
           <a href="index.php" class="no-underline text-black text-lg">Beranda</a>
@@ -34,9 +33,6 @@ $isLoggedIn = isset($_SESSION["login"]) && $_SESSION["login"] === true;
         </li>
         <li>
           <a href="infoKami.php" class="no-underline text-black text-lg">Info Kami</a>
-        </li>
-        <li>
-          <a href="" class="no-underline text-black text-lg">Store</a>
         </li>
         <li>
           <a href="infoKami.php" class="no-underline text-black text-lg">Riwayat Pemesanan</a>

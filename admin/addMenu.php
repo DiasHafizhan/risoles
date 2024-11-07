@@ -89,6 +89,7 @@ if (isset($_POST['submit'])) {
       <div class="mb-3">
         <label for="type" class="form-label">Menu Type</label>
         <select class="form-select" id="dropdown" name="type">
+          <option value="Bundle">Bundle</option>
           <option value="Makanan">Makanan</option>
           <option value="Minuman">Minuman</option>
         </select>

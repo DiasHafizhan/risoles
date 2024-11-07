@@ -62,56 +62,167 @@ $menu = read("SELECT * FROM menu");
                 Add Menu
               </a>
             </div>
+            <!-- Type bundle -->
+            <div class="w-full">
+              <h1>Bundle</h1>
+              <div class="flex flex-wrap justify-between"> <!-- Flex wrapper untuk semua card -->
+                <?php foreach ($menu as $product): ?>
+                  <?php if ($product['type'] === 'Bundle'): ?>
+                    <div class="card mb-3 card-style"> <!-- Set width card dengan Tailwind -->
+                      <img src="../img/<?= $product['image'] ?>" class="card-img-top" alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title"><?= $product['name'] ?></h5>
+                        <p class="card-text overflow-hidden text-ellipsis whitespace-normal"
+                          style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">
+                          <?= $product['description'] ?>
+                        </p>
+                        <div class="flex gap-2 mt-2"> <!-- Flex untuk tombol -->
+                          <a href="edit.php?id=<?= $product['id'] ?>" class="btn btn-warning w-full"><i
+                              class='bx bxs-edit-alt'></i></a>
+                          <!-- Button trigger modal -->
+                          <a href="delete.php?id=<?= $product['id'] ?>" type="button" class="btn btn-danger w-full"
+                            data-bs-toggle="modal" data-bs-target="#modal<?= $product['id'] ?>">
+                            <i class='bx bxs-trash'></i>
+                          </a>
+
+                          <!-- Modal -->
+                          <div class="modal fade" id="modal<?= $product['id'] ?>" tabindex="-1"
+                            aria-labelledby="modalLabel<?= $product['id'] ?>" aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h1 class="modal-title fs-5" id="modalLabel<?= $product['id'] ?>">Konfirmasi Penghapusan
+                                  </h1>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                  Apakah Anda yakin ingin menghapus item ini?
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                  <a href="delete.php?id=<?= $product['id'] ?>" class="btn btn-danger">Delete</a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  <?php endif ?>
+                <?php endforeach ?>
+              </div>
+            </div>
+            <!-- Type bundle -->
+
+            <!-- Type makanan -->
             <div class="w-full">
               <h1>Makanan</h1>
               <div class="flex flex-wrap justify-between"> <!-- Flex wrapper untuk semua card -->
                 <?php foreach ($menu as $product): ?>
-                  <div class="card mb-3 card-style"> <!-- Set width card dengan Tailwind -->
-                    <img src="../img/<?= $product['image'] ?>" class="card-img-top" alt="...">
-                    <div class="card-body">
-                      <h5 class="card-title"><?= $product['name'] ?></h5>
-                      <p class="card-text overflow-hidden text-ellipsis whitespace-normal"
-                        style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">
-                        <?= $product['description'] ?>
-                      </p>
-                      <div class="flex gap-2 mt-2"> <!-- Flex untuk tombol -->
-                        <a href="edit.php?id=<?= $product['id'] ?>" class="btn btn-warning w-full"><i
-                            class='bx bxs-edit-alt'></i></a>
-                        <!-- Button trigger modal -->
-                        <a href="delete.php?id=<?= $product['id'] ?>" type="button" class="btn btn-danger w-full"
-                          data-bs-toggle="modal" data-bs-target="#modal<?= $product['id'] ?>">
-                          <i class='bx bxs-trash'></i>
-                        </a>
+                  <?php if ($product['type'] === 'Makanan'): ?>
+                    <div class="card mb-3 card-style"> <!-- Set width card dengan Tailwind -->
+                      <img src="../img/<?= $product['image'] ?>" class="card-img-top" alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title"><?= $product['name'] ?></h5>
+                        <p class="card-text overflow-hidden text-ellipsis whitespace-normal"
+                          style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">
+                          <?= $product['description'] ?>
+                        </p>
+                        <div class="flex gap-2 mt-2"> <!-- Flex untuk tombol -->
+                          <a href="edit.php?id=<?= $product['id'] ?>" class="btn btn-warning w-full"><i
+                              class='bx bxs-edit-alt'></i></a>
+                          <!-- Button trigger modal -->
+                          <a href="delete.php?id=<?= $product['id'] ?>" type="button" class="btn btn-danger w-full"
+                            data-bs-toggle="modal" data-bs-target="#modal<?= $product['id'] ?>">
+                            <i class='bx bxs-trash'></i>
+                          </a>
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="modal<?= $product['id'] ?>" tabindex="-1"
-                          aria-labelledby="modalLabel<?= $product['id'] ?>" aria-hidden="true">
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="modalLabel<?= $product['id'] ?>">Konfirmasi Penghapusan
-                                </h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                  aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                Apakah Anda yakin ingin menghapus item ini?
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <a href="delete.php?id=<?= $product['id'] ?>" class="btn btn-danger">Delete</a>
+                          <!-- Modal -->
+                          <div class="modal fade" id="modal<?= $product['id'] ?>" tabindex="-1"
+                            aria-labelledby="modalLabel<?= $product['id'] ?>" aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h1 class="modal-title fs-5" id="modalLabel<?= $product['id'] ?>">Konfirmasi Penghapusan
+                                  </h1>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                  Apakah Anda yakin ingin menghapus item ini?
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                  <a href="delete.php?id=<?= $product['id'] ?>" class="btn btn-danger">Delete</a>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
 
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  <?php endif ?>
                 <?php endforeach ?>
               </div>
             </div>
+            <!-- Type makanan -->
 
+            <!-- Type minuman -->
+            <div class="w-full">
+              <h1>Minuman</h1>
+              <div class="flex flex-wrap justify-between"> <!-- Flex wrapper untuk semua card -->
+                <?php foreach ($menu as $product): ?>
+                  <?php if ($product['type'] === 'Minuman'): ?>
+                    <div class="card mb-3 card-style"> <!-- Set width card dengan Tailwind -->
+                      <img src="../img/<?= $product['image'] ?>" class="card-img-top" alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title"><?= $product['name'] ?></h5>
+                        <p class="card-text overflow-hidden text-ellipsis whitespace-normal"
+                          style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">
+                          <?= $product['description'] ?>
+                        </p>
+                        <div class="flex gap-2 mt-2"> <!-- Flex untuk tombol -->
+                          <a href="edit.php?id=<?= $product['id'] ?>" class="btn btn-warning w-full"><i
+                              class='bx bxs-edit-alt'></i></a>
+                          <!-- Button trigger modal -->
+                          <a href="delete.php?id=<?= $product['id'] ?>" type="button" class="btn btn-danger w-full"
+                            data-bs-toggle="modal" data-bs-target="#modal<?= $product['id'] ?>">
+                            <i class='bx bxs-trash'></i>
+                          </a>
+
+                          <!-- Modal -->
+                          <div class="modal fade" id="modal<?= $product['id'] ?>" tabindex="-1"
+                            aria-labelledby="modalLabel<?= $product['id'] ?>" aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h1 class="modal-title fs-5" id="modalLabel<?= $product['id'] ?>">Konfirmasi Penghapusan
+                                  </h1>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                  Apakah Anda yakin ingin menghapus item ini?
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                  <a href="delete.php?id=<?= $product['id'] ?>" class="btn btn-danger">Delete</a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  <?php endif ?>
+                <?php endforeach ?>
+              </div>
+            </div>
+            <!-- Type minuman -->
           </div>
         </div>
       </div>
