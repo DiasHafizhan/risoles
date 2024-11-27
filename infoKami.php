@@ -11,39 +11,66 @@
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 
-<body>
+<body style="background-color: #27262b; color: white;">
   <?php include 'Component/header.php' ?>
 
+  <div class="container w-full" style="margin-top: 30px;">
+    <div class="row">
+      <div class="col-6 ">
+        <div class="row items-center">
+          <div class="col-6 flex flex-col">
+            <div class="border rounded-lg" style="height: 307px; width: 261px; margin-bottom: 20px;">Gambar</div>
+            <div class="border rounded-lg" style="height: 200px; width: 261px; margin-bottom: 20px;">Gambar</div>
+          </div>
+          <div class="col-6 flex flex-col">
+            <div class="border rounded-lg" style="height: 307px; width: 261px; margin-bottom: 20px;">Gambar</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 flex flex-col justify-center items-center">
+        <h1 style="margin-bottom: 20px;">Lorem ipsum dolor sit amet consectetur</h1>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Et dolor minus dolores ratione explicabo a
+          exercitationem facere, voluptatum eaque eius similique aliquam illum ab at aperiam eos ipsa quod nisi
+          mollitia, soluta perferendis obcaecati repellat?</p>
+        <div>
 
-  <div class="container md:flex justify-center items-center" style="margin-top: 90px;">
-    <div class="w-1/2" style="background-color: aqua;">
-      <h1 class="flex justify-center items-center">Gambar</h1>
-    </div>
-    <div class="w-1/2">
-      <table class="table table-borderless">
-        <tbody>
-          <tr>
-            <td>Kontak Kami</td>
-            <td>08123456789</td>
-          </tr>
-          <tr>
-            <td>Alamat</td>
-            <td>Jl. Akses UI, Kelapa Dua, Cimanggis, Depok</td>
-          </tr>
-          <tr>
-            <td>Jam Operasional</td>
-            <td>Senin - Sabtu (10:00 - 20:00)</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="flex flex-col" style="gap: 6px; margin-top: 30px;">
-        <p>Cabang :</p>
-        <p>Jl. Kejayaan Raya, Depok Timur, Sukmajaya, Depok</p>
+        </div>
       </div>
     </div>
+
   </div>
 
+  <div class="w-full flex items-center" style="margin-top: 100px;  margin-bottom: 80px;">
+    <div class="flex flex-col justify-center items-center" style="width: 50%;height: 300px; background-color: #2a2e3e;">
+      <h4 style="font-size: 18px;">HM Risoles</h4>
+      <h1 style="font-weight: 800; font-size: 50px;">Our History</h1>
+    </div>
+    <div class="flex justify-center items-center"
+      style="width: 50%;height: 300px; border-top: 1px solid #2a2e3e;border-bottom: 1px solid #2a2e3e;">
+      <div class="timeline">
+        <div class="">
+          <h3 style="margin-bottom: 20px; color: #8e8d94;">2000</h3>
+          <div class="">
+            <p style="font-weight: 600; color: #ffbc01;">1</p>
+            <h5 style="font-size: 25px; font-weight: 600;">Lorem, ipsum dolor.</h5>
+            <p style="max-width: 200px; color: #8e8d94;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis, aspernatur?</p>
+          </div>
+        </div>
+        <div class="line"></div>
+        <div class="">
+          <h3 style="margin-bottom: 20px; color: #8e8d94;">2024</h3>
+          <div class="">
+            <p style="font-weight: 600; color: #ffbc01;">2</p>
+            <h5 style="font-size: 25px; font-weight: 600;">Lorem, ipsum dolor.</h5>
+            <p style="max-width: 200px; color: #8e8d94;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis, aspernatur?</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <?php include "./Component/footer.php" ?>
 
 
 

@@ -23,35 +23,35 @@ function read($query)
 
 function register($data)
 {
-    global $con;
+  global $con;
 
-    $nama = strtolower(stripcslashes($data['nama']));
-    $email = mysqli_real_escape_string($con, $data['email']);
-    $telp = strtolower(stripcslashes($data['telp']));
-    $password = mysqli_real_escape_string($con, $data['password']);
-    $password2 = mysqli_real_escape_string($con, $data['password2']);
+  $nama = strtolower(stripcslashes($data['nama']));
+  $email = mysqli_real_escape_string($con, $data['email']);
+  $telp = strtolower(stripcslashes($data['telp']));
+  $password = mysqli_real_escape_string($con, $data['password']);
+  $password2 = mysqli_real_escape_string($con, $data['password2']);
 
-    // Cek apakah email sudah terdaftar
-    $result = mysqli_query($con, "SELECT * FROM users WHERE email = '$email'");
-    if (mysqli_fetch_assoc($result)) {
-        echo "<script>alert('Email sudah terdaftar');</script>";
-        return false;
-    }
+  // Cek apakah email sudah terdaftar
+  $result = mysqli_query($con, "SELECT * FROM users WHERE email = '$email'");
+  if (mysqli_fetch_assoc($result)) {
+    echo "<script>alert('Email sudah terdaftar');</script>";
+    return false;
+  }
 
-    // Cek konfirmasi password
-    if ($password !== $password2) {
-        echo "<script>alert('Konfirmasi password tidak cocok');</script>";
-        return false;
-    }
+  // Cek konfirmasi password
+  if ($password !== $password2) {
+    echo "<script>alert('Konfirmasi password tidak cocok');</script>";
+    return false;
+  }
 
-    // Hash password
-    $password = password_hash($password, PASSWORD_DEFAULT);
+  // Hash password
+  $password = password_hash($password, PASSWORD_DEFAULT);
 
-    // Query insert tanpa kolom confirmPassword
-    $query = "INSERT INTO users (nama, email, telp, password) VALUES ('$nama', '$email', '$telp', '$password')";
-    mysqli_query($con, $query);
+  // Query insert tanpa kolom confirmPassword
+  $query = "INSERT INTO users (nama, email, telp, password) VALUES ('$nama', '$email', '$telp', '$password')";
+  mysqli_query($con, $query);
 
-    return mysqli_affected_rows($con);
+  return mysqli_affected_rows($con);
 }
 
 
@@ -145,6 +145,24 @@ function upload()
   move_uploaded_file($tmpName, '../img/' . $namaFile);
   return $namaFile;
 }
+
+
+function change($data)
+{
+  global $con;
+
+  $id = $data['id'];
+  $nama = $data['nama'];
+  $telp = $data['telp'];
+  $email = $data['email'];
+
+  $query = "INSERT INTO users (nama, telp, email, password) VALUES ('$nama', '$telp', '$email', 'default_password') WHERE id = '$id'";
+
+  mysqli_query($con, $query);
+  mysqli_affected_rows($con);
+}
+
+
 
 
 

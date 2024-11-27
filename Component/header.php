@@ -7,38 +7,62 @@ $isLoggedIn = isset($_SESSION["login"]) && $_SESSION["login"] === true;
 
 ?>
 
-<div class="w-full bg-red-600 sticky-top">
-  <div class="container py-2 flex justify-between items-center">
+<div class="w-full sticky-top" style="background-color: #1d1d1d;">
+  <div class="container py-2 flex justify-between items-center navbar">
     <h2 class="text-xl">
-      <a href="" class="text-black no-underline">HM Risoles</a>
+      <a href="" class="text-white no-underline">HM Risoles</a>
     </h2>
 
     <ul class="hidden md:flex pt-2" style="gap: 30px;">
       <?php if (!$isLoggedIn): ?>
         <li>
-          <a href="index.php" class="no-underline text-black text-lg">Beranda</a>
+          <a href="index.php?x=home"
+            class="no-underline text-lg <?php echo (isset($_GET['x']) && $_GET['x'] == 'home') ? 'aktif' : ''; ?>">
+            Beranda
+          </a>
         </li>
         <li>
-          <a href="menu.php" class="no-underline text-black text-lg">Menu</a>
+          <a href="menu.php?x=menu"
+            class="no-underline text-lg <?php echo (isset($_GET['x']) && $_GET['x'] == 'menu') ? 'aktif' : ''; ?>">
+            Menu
+          </a>
         </li>
         <li>
-          <a href="infoKami.php" class="no-underline text-black text-lg">Info Kami</a>
+          <a href="infoKami.php?x=about"
+            class="no-underline text-lg <?php echo (isset($_GET['x']) && $_GET['x'] == 'about') ? 'aktif' : ''; ?>">
+            About
+          </a>
         </li>
       <?php else: ?>
         <li>
-          <a href="index.php" class="no-underline text-black text-lg">Beranda</a>
+          <a href="index.php?x=home"
+            class="no-underline text-lg <?php echo (isset($_GET['x']) && $_GET['x'] == 'home') ? 'aktif' : ''; ?>">
+            Beranda
+          </a>
         </li>
         <li>
-          <a href="menu.php" class="no-underline text-black text-lg">Menu</a>
+          <a href="menu.php?x=menu"
+            class="no-underline text-lg <?php echo (isset($_GET['x']) && $_GET['x'] == 'menu') ? 'aktif' : ''; ?>">
+            Menu
+          </a>
         </li>
         <li>
-          <a href="infoKami.php" class="no-underline text-black text-lg">Info Kami</a>
+          <a href="infoKami.php?x=about"
+            class="no-underline text-lg <?php echo (isset($_GET['x']) && $_GET['x'] == 'about') ? 'aktif' : ''; ?>">
+            About
+          </a>
         </li>
         <li>
-          <a href="infoKami.php" class="no-underline text-black text-lg">Riwayat Pemesanan</a>
+          <a href="history.php?x=history"
+            class="no-underline text-lg <?php echo (isset($_GET['x']) && $_GET['x'] == 'history') ? 'aktif' : ''; ?>">
+            Riwayat Pemesanan
+          </a>
         </li>
         <li>
-          <a href="" class="no-underline text-black text-lg">Profile</a>
+          <a href="profile.php?x=profile"
+            class="no-underline text-lg <?php echo (isset($_GET['x']) && $_GET['x'] == 'profile') ? 'aktif' : ''; ?>">
+            Profile
+          </a>
         </li>
       <?php endif ?>
 
@@ -47,12 +71,11 @@ $isLoggedIn = isset($_SESSION["login"]) && $_SESSION["login"] === true;
     <div class="">
       <?php if ($isLoggedIn): ?>
         <a href="./auth/logout.php"
-          class="no-underline text-black text-lg py-2 px-4 bg-sky-600 hover:bg-sky-500 duration-300  rounded-3xl">
+        class="no-underline text-lg py-2 px-4 rounded-lg btn-login">
           Logout
         </a>
       <?php else: ?>
-        <a href="./auth/login.php"
-          class="no-underline text-black text-lg py-2 px-4 bg-sky-600 hover:bg-sky-500 duration-300  rounded-3xl">
+        <a href="./auth/login.php" class="no-underline text-lg py-2 px-4 rounded-lg btn-login">
           Login
         </a>
       <?php endif; ?>

@@ -13,8 +13,9 @@ if (isset($_POST['submit'])) {
   if (mysqli_num_rows($result) === 1) {
     $row = mysqli_fetch_assoc($result);
     if (password_verify($password, $row["password"])) {
-      // session login
+      $userId = $row['id'];  // tambahkan ini
       $_SESSION['login'] = true;
+      $_SESSION['user_id'] = $userId;  // gunakan $userId yang benar
       $_SESSION['user'] = $row['kategori'];
       if ($_SESSION['user'] === 'admin') {
         $_SESSION['pengguna'] = $email;
@@ -25,6 +26,7 @@ if (isset($_POST['submit'])) {
       exit;
     }
   }
+
 
   $error = true;
 }
@@ -140,18 +142,15 @@ if (isset($_POST['submit'])) {
   <link href="sign-in.css" rel="stylesheet">
 </head>
 
-<body>
+<body style="background-color: #27262b; color: #fff;">
 
-  <div class="container text-center mt-5">
-    <h1 class="text-2xl mb-5">Selamat Datang di HM Risoles</h1>
-
+  <div class="container">
     <div class="row">
-      <div class="col-6">
-        <div class="rounded-lg mx-auto"
-          style="border: 1px solid red; width: 80%; padding-top: 30px; padding-bottom: 30px; padding-right: 50px; padding-left: 50px;">
-          <h2 class="mb-3" style="font-size: 25px; font-weight: 600;">
-            Buat Akun
-          </h2>
+      <div class="col-6 flex justify-center items-center">
+        <div class="rounded-lg" style="width: 350px;">
+          <h1 style="font-size: 40px; font-weight: 600; margin-bottom: 10px;">Welcome back !</h1>
+          <p style="color: #8e8d94;margin-bottom: 30px;">Don't have an account? <a href="register.php" class="no-underline"
+              style="color: #ffbc01;">Register</a></p>
 
           <form action="" method="POST">
             <div class="netflix-input-container">
@@ -164,16 +163,12 @@ if (isset($_POST['submit'])) {
               <label for="password" class="netflix-label">Kata Sandi</label>
             </div>
 
-            <button class="btn-auth rounded-3xl" type="submit" name="submit">Login</button>
+            <button class="btn-auth rounded-lg w-full" type="submit" name="submit">Login</button>
           </form>
         </div>
-        <div class="req">
-          <p class="my-3">Sudah punya akun?</p>
-          <a href="login.php" class="rounded-3xl">Register</a>
-        </div>
       </div>
-      <div class="col-6" style="background-color: #6528e0;">
-        <h1>Gambar</h1>
+      <div class="col-6" style="padding: 20px 30px;">
+        <img src="../img/login.jpg" alt="" class="rounded-lg" style="height: 600px; width: fit-content; margin: auto;">
       </div>
     </div>
 
