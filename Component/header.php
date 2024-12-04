@@ -3,6 +3,8 @@ if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
 
+$id_user = $_SESSION['user'];
+
 $isLoggedIn = isset($_SESSION["login"]) && $_SESSION["login"] === true;
 
 ?>
@@ -59,7 +61,7 @@ $isLoggedIn = isset($_SESSION["login"]) && $_SESSION["login"] === true;
           </a>
         </li>
         <li>
-          <a href="profile.php?x=profile"
+          <a href="profile.php?x=profile&id=<?= $id_user['id'] ?>"
             class="no-underline text-lg <?php echo (isset($_GET['x']) && $_GET['x'] == 'profile') ? 'aktif' : ''; ?>">
             Profile
           </a>

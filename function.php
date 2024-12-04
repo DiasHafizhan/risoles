@@ -151,15 +151,56 @@ function change($data)
 {
   global $con;
 
-  $id = $data['id'];
+  $id = $data['id']; // Ambil ID dari data
   $nama = $data['nama'];
   $telp = $data['telp'];
   $email = $data['email'];
 
-  $query = "INSERT INTO users (nama, telp, email, password) VALUES ('$nama', '$telp', '$email', 'default_password') WHERE id = '$id'";
+  // Query untuk memperbarui data
+  $query = "UPDATE users SET 
+              nama = '$nama', 
+              telp = '$telp', 
+              email = '$email' 
+            WHERE id = '$id'";
 
+  // Jalankan query
   mysqli_query($con, $query);
-  mysqli_affected_rows($con);
+
+  // Kembalikan jumlah baris yang terpengaruh
+  return mysqli_affected_rows($con);
+}
+
+
+function readSingle($query, $params = [])
+{
+  global $con; // Pastikan $con adalah koneksi database Anda
+
+  // Siapkan statement
+  $stmt = mysqli_prepare($con, $query);
+
+  if ($stmt === false) {
+    die('Prepare statement gagal: ' . mysqli_error($con));
+  }
+
+  // Bind parameter jika ada
+  if (!empty($params)) {
+    $types = str_repeat('s', count($params)); // Mengasumsikan semua parameter adalah string
+    mysqli_stmt_bind_param($stmt, $types, ...$params);
+  }
+
+  // Eksekusi statement
+  mysqli_stmt_execute($stmt);
+
+  // Ambil hasil query
+  $result = mysqli_stmt_get_result($stmt);
+
+  // Ambil satu baris hasil (asosiatif)
+  $data = mysqli_fetch_assoc($result);
+
+  // Tutup statement
+  mysqli_stmt_close($stmt);
+
+  return $data; // Kembalikan hasil
 }
 
 

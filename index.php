@@ -1,3 +1,18 @@
+<?php 
+
+// session_start();
+// require 'function.php';
+
+// Pastikan pengguna sudah login
+// if (isset($_SESSION['user'])) {
+//   var_dump($_SESSION['user']);
+//   exit;
+// }
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 

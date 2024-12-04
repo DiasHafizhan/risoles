@@ -3,7 +3,7 @@
 session_start();
 
 // Memastikan user login terlebih dahulu
-if (empty($_SESSION['pengguna'])) {
+if (empty($_SESSION['user'])) {
   header("Location: ../auth/login.php");
   exit;
 }
@@ -11,8 +11,10 @@ if (empty($_SESSION['pengguna'])) {
 // Menghubungkan ke database
 require '../function.php';
 
+// $result = read('SELECT * FROM ')
+
 // Mendapatkan data pengguna berdasarkan session
-$query = mysqli_query($con, "SELECT email FROM users WHERE email = '$_SESSION[pengguna]'");
+$query = mysqli_query($con, "SELECT email FROM users WHERE email = '{$_SESSION['user']['email']}'");
 
 // Mengecek apakah query berhasil dan ada hasil
 if ($query && mysqli_num_rows($query) > 0) {
@@ -24,6 +26,19 @@ if ($query && mysqli_num_rows($query) > 0) {
   header("Location: ../auth/login.php");
   exit;
 }
+
+// Query untuk menghitung baris
+$sql = "SELECT COUNT(*) AS total_rows FROM menu";
+$result = $con->query($sql);
+
+// Ambil hasil
+if ($result->num_rows > 0) {
+  $row = $result->fetch_assoc();
+} else {
+  echo "Tabel kosong.";
+}
+
+
 
 
 ?>
@@ -41,7 +56,7 @@ if ($query && mysqli_num_rows($query) > 0) {
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 
-<body>
+<body style="background-color: #27262b; color: #fff;">
   <?php include '../Component/admin/header.php' ?>
 
 
@@ -49,13 +64,32 @@ if ($query && mysqli_num_rows($query) > 0) {
     <div class="row">
       <?php include '../Component/sidebar.php' ?>
       <div class="col-md-9">
-        <div class="card">
-          <h5 class="card-header">dashboard</h5>
-          <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+        <div class="flex justify-between items-center">
+          <div class="rounded-lg"
+            style="width: 32%; border: 1px solid #7e89ac; padding: 10px; background-color: #343b4f;">
+            <div class="flex items-center" style="gap: 10px; color: #d9e1fa;">
+              <p style="font-size: 18px; margin-bottom: 2px;"><i class='bx bx-food-menu'></i></p>
+              <p style="font-size: 15px; margin-bottom: 2px; font-weight: 700;">Total Products</p>
+            </div>
+            <h3><?= $row['total_rows'] ?></h3>
           </div>
+          <div class="rounded-lg"
+            style="width: 32%; border: 1px solid #7e89ac; padding: 10px; background-color: #343b4f;">
+            <div class="flex items-center" style="gap: 10px; color: #d9e1fa;">
+              <p style="font-size: 18px; margin-bottom: 2px;"><i class='bx bx-package'></i></p>
+              <p style="font-size: 15px; margin-bottom: 2px; font-weight: 700;">Sales This Mounth</p>
+            </div>
+            <h3>300</h3>
+          </div>
+          <div class="rounded-lg"
+            style="width: 32%; border: 1px solid #7e89ac; padding: 10px; background-color: #343b4f;">
+            <div class="flex items-center" style="gap: 10px; color: #d9e1fa;">
+              <p style="font-size: 18px; margin-bottom: 2px;"><i class='bx bx-dollar'></i></p>
+              <p style="font-size: 15px; margin-bottom: 2px; font-weight: 700;">Revenue This Mounth</p>
+            </div>
+            <h3>300</h3>
+          </div>
+
         </div>
       </div>
     </div>

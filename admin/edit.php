@@ -37,7 +37,7 @@ if(isset($_POST['submit'])){
 
   <div class="container">
     <h1 style="color: #AF1740; margin-bottom: 40px; margin-bottom: 40px; margin-top: 20px;">
-      Add Menu
+      Edit Menu
     </h1>
 
 

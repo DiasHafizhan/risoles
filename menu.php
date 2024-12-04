@@ -3,7 +3,7 @@ session_start();
 require 'function.php';
 
 // Asumsikan user login memiliki id tersimpan di session sebagai 'user_id'
-$id_user = $_SESSION['user_id'];
+$id_user = $_SESSION['user'];
 
 // Mengambil data produk dan kuantitas dari keranjang
 $query = "SELECT menu.id AS menu_id, cart.id,menu.name, menu.description, menu.price, menu.image, menu.type, cart.kuantitas, cart.total

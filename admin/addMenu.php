@@ -3,7 +3,7 @@
 session_start();
 
 // Memastikan user login terlebih dahulu
-if (empty($_SESSION['pengguna'])) {
+if (empty($_SESSION['user'])) {
   header("Location: ../auth/login.php");
   exit;
 }
@@ -12,7 +12,7 @@ if (empty($_SESSION['pengguna'])) {
 require '../function.php';
 
 // Mendapatkan data pengguna berdasarkan session
-$query = mysqli_query($con, "SELECT email FROM users WHERE email = '$_SESSION[pengguna]'");
+$query = mysqli_query($con, "SELECT email FROM users WHERE email = '{$_SESSION['user']['email']}'");
 
 // Mengecek apakah query berhasil dan ada hasil
 if ($query && mysqli_num_rows($query) > 0) {

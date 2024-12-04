@@ -3,7 +3,7 @@ session_start();
 require 'function.php';
 
 // Pastikan pengguna sudah login
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user'])) {
   header("Location: login.php");
   exit;
 }
