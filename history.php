@@ -1,3 +1,47 @@
+<?php
+
+session_start();
+require 'function.php';
+
+$user = $_SESSION['user'];
+
+$user_id = $user['id'];
+
+$query = "SELECT 
+    orders.id AS order_id,
+    orders.user_id AS user_id,
+    orders.image AS order_image,
+    orders.total AS order_total,
+    orders.status AS order_status,
+    cart.id AS cart_id,
+    cart.id_menu AS cart_menu_id,
+    cart.kuantitas AS cart_quantity,
+    cart.total AS cart_total,
+    cart.orderDate AS cart_order_date,
+    menu.name AS menu_name,
+    menu.price AS menu_price,
+    menu.image AS menu_image
+FROM 
+    orders
+JOIN 
+    cart 
+ON 
+    orders.id = cart.id_order
+JOIN 
+    menu 
+ON 
+    cart.id_menu = menu.id
+WHERE 
+    orders.status = 'pending'
+    AND orders.user_id IS NOT NULL
+    AND orders.user_id = $user_id";
+
+$cart_items = read($query);
+
+// var_dump($cart_items);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,84 +60,44 @@
 
   <div class="container">
     <div class="row flex justify-between" style="margin-top: 20px;">
-      <div class="col-7">
-        <!-- detail history -->
-        <div class="row flex justify-between rounded-lg" style="border: 1px solid #fff; padding: 20px; margin-bottom: 20px; background-color: #1d1d1d;">
-          <div class="col-5">
-            <div class="flex flex-wrap" style="border-bottom: 1px solid #8e8d94;">
-              <div class="w-full pb-0">
-                <div class="flex items-center justify-between">
-                  <p class="mb-0" style="color: #ffbc01; font-weight: 600;">Risol</p>
-                  <p class="mb-0" style="color: #8e8d94; font-weight: 600;">X 1</p>
-                  <p class="mb-0">Rp.5000</p>
-                </div>
-              </div>
-              <div class="w-full pb-0">
-                <div class="flex items-center justify-between">
-                  <p class="mb-0" style="color: #ffbc01; font-weight: 600;">Risol</p>
-                  <p class="mb-0" style="color: #8e8d94; font-weight: 600;">X 1</p>
-                  <p class="mb-0">Rp.5000</p>
-                </div>
-              </div>
-              
-            </div>
-            <div class="flex justify-end" style="gap: 55px;">
-              <p>Total</p>
-              <p>Rp. 5000</p>
-            </div>
-          </div>
-          <div class="col-5 text-end">
-            <div class="flex items-center justify-end" style="gap: 20px;">
-              <p class="mb-0">11 November 2024</p>
-              <p class="mb-0">18:22</p>
-            </div>
-            <a href="" class="btn btn-danger" style="font-weight: 600;">Pending</a>
-          </div>
-        </div>
-        <!-- detail history -->
-        <!-- detail history -->
-        <div class="row flex justify-between rounded-lg" style="border: 1px solid #fff; padding: 20px; margin-bottom: 20px; background-color: #1d1d1d;">
-          <div class="col-5">
-            <div class="flex flex-wrap" style="border-bottom: 1px solid #8e8d94;">
-              <div class="w-full pb-0">
-                <div class="flex items-center justify-between">
-                  <p class="mb-0" style="color: #ffbc01; font-weight: 600;">Risol</p>
-                  <p class="mb-0" style="color: #8e8d94; font-weight: 600;">X 1</p>
-                  <p class="mb-0">Rp.5000</p>
-                </div>
-              </div>
-              <div class="w-full pb-0">
-                <div class="flex items-center justify-between">
-                  <p class="mb-0" style="color: #ffbc01; font-weight: 600;">Risol</p>
-                  <p class="mb-0" style="color: #8e8d94; font-weight: 600;">X 1</p>
-                  <p class="mb-0">Rp.5000</p>
-                </div>
-              </div>
-              
-            </div>
-            <div class="flex justify-end" style="gap: 55px;">
-              <p>Total</p>
-              <p>Rp. 5000</p>
-            </div>
-          </div>
-          <div class="col-5 text-end">
-            <div class="flex items-center justify-end" style="gap: 20px;">
-              <p class="mb-0">11 November 2024</p>
-              <p class="mb-0">18:22</p>
-            </div>
-            <a href="" class="btn btn-success" style="font-weight: 600;">Success</a>
-          </div>
-        </div>
-        <!-- detail history -->
-      </div>
-      <div class="col-4">
-        <div style="border: 1px solid red;">
-          <h4>Gambar</h4>
-        </div>
+      <div class="">
+        <table class="table table-dark table-striped" style="width: 100%;">
+          <thead>
+            <tr>
+              <th scope="col">Produk</th>
+              <th scope="col">Total</th>
+              <th scope="col">Date order</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($cart_items as $items): ?>
+              <tr>
+                <th style="display: flex; align-items: center; gap: 5px;">
+                  <img src="./img/<?= $items['menu_image'] ?>" alt="" style="width: 100px;">
+                  <div class="">
+                    <p><?= $items['menu_name'] ?></p>
+                    <p>Qty : <?= $items['cart_quantity'] ?></p>
+                  </div>
+                </th>
+
+                <td style="align-items: center;">
+                  Rp. 
+                  <?= number_format($items['menu_price'] * $items['cart_quantity'], 0, ',', '.') ?>
+                </td>
+                <td style="align-items: center;"><?= (new DateTime($items['cart_order_date']))->format('d F Y') ?></td>
+                <td style="align-items: center;">
+                  <p class="btn btn-danger"><?= $items['order_status'] ?></p>
+                </td>
+              </tr>
+            <?php endforeach ?>
+          </tbody>
+        </table>
       </div>
     </div>
-
   </div>
+
+  <?php include 'Component/footer.php' ?>
 
 
 

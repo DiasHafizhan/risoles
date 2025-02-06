@@ -3,7 +3,19 @@ if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
 
-$id_user = $_SESSION['user'];
+// Cek apakah user sudah login
+if (isset($_SESSION['user'])) {
+  // Jika sesi user ada, ambil data user dari sesi
+  $user = $_SESSION['user'];
+} else {
+  // Jika tidak ada sesi user, atur nilai default untuk $user
+  $user = [
+    'id' => null,
+    'email' => null,
+    'nama' => 'Guest',
+    'telp' => null
+  ];
+}
 
 $isLoggedIn = isset($_SESSION["login"]) && $_SESSION["login"] === true;
 
@@ -72,8 +84,7 @@ $isLoggedIn = isset($_SESSION["login"]) && $_SESSION["login"] === true;
 
     <div class="">
       <?php if ($isLoggedIn): ?>
-        <a href="./auth/logout.php"
-        class="no-underline text-lg py-2 px-4 rounded-lg btn-login">
+        <a href="./auth/logout.php" class="no-underline text-lg py-2 px-4 rounded-lg btn-login">
           Logout
         </a>
       <?php else: ?>

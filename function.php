@@ -203,6 +203,35 @@ function readSingle($query, $params = [])
   return $data; // Kembalikan hasil
 }
 
+function order($data)
+{
+  global $con;
+
+  $total = $data['total'];
+  $image = upload();
+  $id_user = $data['userId'];
+
+  var_dump($image);
+  var_dump($id_user);
+
+  if (!$image) {
+    return false;
+  }
+
+  $query = "INSERT INTO orders (image, total, user_id) VALUES ('$image', $total, $id_user)";
+
+
+  if (mysqli_query($con, $query)) {
+    $inserted_id = mysqli_insert_id($con);
+    $queryCart = "UPDATE cart SET id_order = $inserted_id WHERE id_user = $id_user";
+    mysqli_query($con, $queryCart);
+    mysqli_affected_rows($con);
+    return "Order berhasil dibuat dengan ID: " . $inserted_id;
+  } else {
+    echo "Error: " . mysqli_error($con);
+  }
+}
+
 
 
 

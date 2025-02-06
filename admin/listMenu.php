@@ -63,12 +63,12 @@ $menu = read("SELECT * FROM menu");
             </a>
           </div>
           <h2>Bundle</h2>
-          <div class="flex flex-wrap justify-between"> <!-- Flex wrapper untuk semua card -->
+          <div class="flex flex-wrap" style="gap: 3px;"> <!-- Flex wrapper untuk semua card -->
             <?php foreach ($menu as $product): ?>
               <?php if ($product['type'] === 'Bundle'): ?>
                 <div class="card mb-3 card-style" style="background-color: #0c0f17; color: #fff;">
                   <!-- Set width card dengan Tailwind -->
-                  <img src="../img/<?= $product['image'] ?>" class="card-img-top" alt="...">
+                  <img src="../img/<?= $product['image'] ?>" style="height: 205px;" class="card-img-top" alt="...">
                   <div class="card-body">
                     <h5 class="card-title"><?= $product['name'] ?></h5>
                     <p class="card-text overflow-hidden text-ellipsis whitespace-normal"
@@ -77,13 +77,12 @@ $menu = read("SELECT * FROM menu");
                     </p>
                     <div class="flex gap-2 mt-2"> <!-- Flex untuk tombol -->
                       <a href="edit.php?id=<?= $product['id'] ?>" type="button"
-                        class="w-full no-underline rounded-lg flex justify-center items-center"
-                        style="border: 1px solid #f2c200; color: #f2c200; height: 40px;"><i class='bx bxs-edit-alt'></i></a>
+                        class="w-full btn btn-warning no-underline rounded-lg flex justify-center items-center"><i
+                          class='bx bxs-edit-alt'></i></a>
                       <!-- Button trigger modal -->
                       <a href="delete.php?id=<?= $product['id'] ?>" type="button"
-                        class="w-full no-underline rounded-lg flex justify-center items-center"
-                        style="border: 1px solid #f63; color: #f63; height: 40px;" data-bs-toggle="modal"
-                        data-bs-target="#modal<?= $product['id'] ?>">
+                        class="w-full btn btn-danger no-underline rounded-lg flex justify-center items-center"
+                        data-bs-toggle="modal" data-bs-target="#modal<?= $product['id'] ?>">
                         <i class='bx bxs-trash'></i>
                       </a>
 
@@ -120,12 +119,12 @@ $menu = read("SELECT * FROM menu");
         <!-- Type makanan -->
         <div class="w-full">
           <h2>Makanan</h2>
-          <div class="flex flex-wrap justify-between"> <!-- Flex wrapper untuk semua card -->
+          <div class="flex flex-wrap" style="gap: 3px;"> <!-- Flex wrapper untuk semua card -->
             <?php foreach ($menu as $product): ?>
               <?php if ($product['type'] === 'Makanan'): ?>
                 <div class="card mb-3 card-style" style="background-color: #0c0f17; color: #fff;">
                   <!-- Set width card dengan Tailwind -->
-                  <img src="../img/<?= $product['image'] ?>" class="card-img-top" alt="...">
+                  <img src="../img/<?= $product['image'] ?>" style="height: 205px;" class="card-img-top"  alt="...">
                   <div class="card-body">
                     <h5 class="card-title"><?= $product['name'] ?></h5>
                     <p class="card-text overflow-hidden text-ellipsis whitespace-normal"
@@ -134,8 +133,8 @@ $menu = read("SELECT * FROM menu");
                     </p>
                     <div class="flex gap-2 mt-2"> <!-- Flex untuk tombol -->
                       <a href="edit.php?id=<?= $product['id'] ?>"
-                        class="w-full no-underline rounded-lg flex justify-center items-center"
-                        style="border: 1px solid #f2c200; color: #f2c200; height: 40px;"><i class='bx bxs-edit-alt'></i></a>
+                        class="w-full btn btn-warning no-underline rounded-lg flex justify-center items-center"><i
+                          class='bx bxs-edit-alt'></i></a>
                       <!-- Button trigger modal -->
                       <a href="delete.php?id=<?= $product['id'] ?>" type="button" class="btn btn-danger w-full"
                         data-bs-toggle="modal" data-bs-target="#modal<?= $product['id'] ?>">
@@ -175,11 +174,12 @@ $menu = read("SELECT * FROM menu");
         <!-- Type minuman -->
         <div class="w-full">
           <h2>Minuman</h2>
-          <div class="flex flex-wrap justify-between"> <!-- Flex wrapper untuk semua card -->
+          <div class="flex flex-wrap" style="gap: 3px;"> <!-- Flex wrapper untuk semua card -->
             <?php foreach ($menu as $product): ?>
               <?php if ($product['type'] === 'Minuman'): ?>
-                <div class="card mb-3 card-style"> <!-- Set width card dengan Tailwind -->
-                  <img src="../img/<?= $product['image'] ?>" class="card-img-top" alt="...">
+                <div class="card mb-3 card-style" style="background-color: #0c0f17; color: #fff;">
+                  <!-- Set width card dengan Tailwind -->
+                  <img src="../img/<?= $product['image'] ?>" style="height: 205px;" class="card-img-top" alt="...">
                   <div class="card-body">
                     <h5 class="card-title"><?= $product['name'] ?></h5>
                     <p class="card-text overflow-hidden text-ellipsis whitespace-normal"
