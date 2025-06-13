@@ -119,10 +119,6 @@ $isLoggedIn = isset($_SESSION['login']) && $_SESSION['login'] === true;
       </div>
     </div>
 
-    <div class="">
-      <img src="" alt="">
-    </div>
-
 
     <h2>Upload Screenshot</h2>
     <form action="" method="POST" enctype="multipart/form-data">

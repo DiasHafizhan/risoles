@@ -207,30 +207,67 @@ function order($data)
 {
   global $con;
 
-  $total = $data['total'];
-  $image = upload();
-  $id_user = $data['userId'];
+  $user_id = mysqli_real_escape_string($con, $data['userId']);
+  $total = mysqli_real_escape_string($con, $data['total']);
 
-  var_dump($image);
-  var_dump($id_user);
+  // 1. Cek apakah user sudah memiliki pesanan 'Pending'
+  $check_order = mysqli_query($con, "SELECT id FROM orders WHERE user_id = '$user_id' AND status = 'dimasak'");
+  if (mysqli_num_rows($check_order) > 0) {
+    return false; // Sudah ada pesanan aktif, tidak bisa buat baru
+  }
 
-  if (!$image) {
+  // 2. Validasi file upload
+  if (!isset($_FILES['image']) || $_FILES['image']['error'] !== UPLOAD_ERR_OK) {
+    return false; // Gagal upload atau tidak ada file
+  }
+
+  $image = $_FILES['image']['name'];
+  $tmp = $_FILES['image']['tmp_name'];
+  $upload_dir = "img/";
+  $upload_path = $upload_dir . $image;
+
+  // Validasi ekstensi file
+  $allowed_ext = ['jpg', 'jpeg', 'png', 'webp'];
+  $file_ext = strtolower(pathinfo($image, PATHINFO_EXTENSION));
+  if (!in_array($file_ext, $allowed_ext)) {
+    return false; // Ekstensi tidak diperbolehkan
+  }
+
+  move_uploaded_file($tmp, $upload_path);
+
+  // 3. Insert ke tabel orders
+  $query_order = "INSERT INTO orders (user_id, image, total, status) 
+                  VALUES ('$user_id', '$image', '$total', 'dimasak')";
+  $result_order = mysqli_query($con, $query_order);
+
+  if (!$result_order) {
     return false;
   }
 
-  $query = "INSERT INTO orders (image, total, user_id) VALUES ('$image', $total, $id_user)";
+  $order_id = mysqli_insert_id($con);
 
+  // 4. Ambil data keranjang
+  $query_cart = "SELECT * FROM cart WHERE id_user = '$user_id' AND id_order IS NULL";
+  $cart_items = mysqli_query($con, $query_cart);
 
-  if (mysqli_query($con, $query)) {
-    $inserted_id = mysqli_insert_id($con);
-    $queryCart = "UPDATE cart SET id_order = $inserted_id WHERE id_user = $id_user";
-    mysqli_query($con, $queryCart);
-    mysqli_affected_rows($con);
-    return "Order berhasil dibuat dengan ID: " . $inserted_id;
-  } else {
-    echo "Error: " . mysqli_error($con);
+  while ($item = mysqli_fetch_assoc($cart_items)) {
+    $menu_id = $item['id_menu'];
+    $quantity = $item['kuantitas'];
+    $created_at = $item['orderDate'];
+
+    $insert_item = "INSERT INTO order_items (order_id, menu_id, quantity, created_at)
+                    VALUES ('$order_id', '$menu_id', '$quantity', '$created_at')";
+    mysqli_query($con, $insert_item);
   }
+
+  // 5. Update cart
+  $update_cart = "UPDATE cart SET id_order = '$order_id' WHERE id_user = '$user_id' AND id_order IS NULL";
+  mysqli_query($con, $update_cart);
+
+  return true;
 }
+
+
 
 
 

@@ -72,12 +72,7 @@ $isLoggedIn = isset($_SESSION["login"]) && $_SESSION["login"] === true;
             Riwayat Pemesanan
           </a>
         </li>
-        <li>
-          <a href="profile.php?x=profile&id=<?= $id_user['id'] ?>"
-            class="no-underline text-lg <?php echo (isset($_GET['x']) && $_GET['x'] == 'profile') ? 'aktif' : ''; ?>">
-            Profile
-          </a>
-        </li>
+        
       <?php endif ?>
 
     </ul>

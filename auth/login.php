@@ -21,12 +21,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       'kategori' => $user['kategori']
     ];
 
+
     // Arahkan ke halaman berdasarkan kategori user
-    if ($_SESSION['user']['kategori'] === 'admin') {
-      header("Location: ../admin");
-    } else {
-      header("Location: ../index.php");
+    switch ($_SESSION['user']['kategori']) {
+      case 'admin':
+        header("Location: ../admin");
+        break;
+      case 'kitchen':
+        header("Location: ../staff");
+        break;
+      case 'kasir':
+        header("Location: ../kasir");
+        break;
+      default:
+        header("Location: ../index.php"); // untuk user biasa
+        break;
     }
+    // Arahkan ke halaman berdasarkan kategori user
+    // if ($_SESSION['user']['kategori'] === 'admin') {
+    //   header("Location: ../admin");
+    // } else {
+    //   header("Location: ../index.php");
+    // }
     exit();
   } else {
     $error = true; // Login gagal

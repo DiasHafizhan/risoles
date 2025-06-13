@@ -38,8 +38,7 @@ if ($result->num_rows > 0) {
   echo "Tabel kosong.";
 }
 
-
-
+$users = read("SELECT * FROM users WHERE kategori IN ('admin', 'kitchen', 'kasir')");
 
 ?>
 
@@ -64,37 +63,93 @@ if ($result->num_rows > 0) {
     <div class="row">
       <?php include '../Component/sidebar.php' ?>
       <div class="col-md-9">
-        <div class="flex justify-between items-center">
-          <div class="rounded-lg"
-            style="width: 32%; border: 1px solid #7e89ac; padding: 10px; background-color: #343b4f;">
-            <div class="flex items-center" style="gap: 10px; color: #d9e1fa;">
-              <p style="font-size: 18px; margin-bottom: 2px;"><i class='bx bx-food-menu'></i></p>
-              <p style="font-size: 15px; margin-bottom: 2px; font-weight: 700;">Total Products</p>
-            </div>
-            <h3><?= $row['total_rows'] ?></h3>
-          </div>
-          <div class="rounded-lg"
-            style="width: 32%; border: 1px solid #7e89ac; padding: 10px; background-color: #343b4f;">
-            <div class="flex items-center" style="gap: 10px; color: #d9e1fa;">
-              <p style="font-size: 18px; margin-bottom: 2px;"><i class='bx bx-package'></i></p>
-              <p style="font-size: 15px; margin-bottom: 2px; font-weight: 700;">Sales This Mounth</p>
-            </div>
-            <h3>300</h3>
-          </div>
-          <div class="rounded-lg"
-            style="width: 32%; border: 1px solid #7e89ac; padding: 10px; background-color: #343b4f;">
-            <div class="flex items-center" style="gap: 10px; color: #d9e1fa;">
-              <p style="font-size: 18px; margin-bottom: 2px;"><i class='bx bx-dollar'></i></p>
-              <p style="font-size: 15px; margin-bottom: 2px; font-weight: 700;">Revenue This Mounth</p>
-            </div>
-            <h3>300</h3>
-          </div>
+        <table class="table table-dark table-striped" style="width: 100%;">
+          <thead>
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">Name</th>
+              <th scope="col">Role</th>
+              <th scope="col">change roles</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php $no = 1; ?>
+            <?php foreach ($users as $user): ?>
+              <tr>
+                <td><?= $no++ ?></td>
+                <td><?= htmlspecialchars($user['nama']) ?></td>
+                <td><?= htmlspecialchars($user['kategori'] ?? '-') ?></td>
+                <td>
+                  <div class="d-flex gap-2">
+                    <select class="form-select kategori-dropdown" data-user-id="<?= $user['id'] ?>">
+                      <option value="admin" <?= $user['kategori'] === 'admin' ? 'selected' : '' ?>>Admin</option>
+                      <option value="kitchen" <?= $user['kategori'] === 'kitchen' ? 'selected' : '' ?>>Kitchen</option>
+                      <option value="kasir" <?= $user['kategori'] === 'kasir' ? 'selected' : '' ?>>Kasir</option>
+                    </select>
 
-        </div>
+
+                    <!-- Tombol modal -->
+                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal<?= $user['id'] ?>">
+                      <i class='bx bxs-trash'></i>
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="modal<?= $user['id'] ?>" tabindex="-1"
+                      aria-labelledby="modalLabel<?= $user['id'] ?>" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content" style="color: #000;">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="modalLabel<?= $user['id'] ?>">Konfirmasi Penghapusan</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            Apakah Anda yakin ingin menghapus <strong><?= htmlspecialchars($user['nama']) ?></strong>?
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                            <a href="delete.php?id=<?= $user['id'] ?>" class="btn btn-danger">Hapus</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            <?php endforeach ?>
+          </tbody>
+
+
+        </table>
       </div>
     </div>
   </div>
 
+
+
+  <script>
+    document.querySelectorAll('.kategori-dropdown').forEach(select => {
+      select.addEventListener('change', function () {
+        const userId = this.dataset.userId;
+        const newKategori = this.value;
+
+        fetch('update_kategori.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: `id=${userId}&kategori=${newKategori}`
+        })
+          .then(response => response.text())
+          .then(result => {
+            alert("Kategori berhasil diperbarui.");
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert("Terjadi kesalahan saat memperbarui kategori.");
+          });
+      });
+    });
+  </script>
 
 
 

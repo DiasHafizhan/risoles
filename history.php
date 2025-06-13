@@ -32,11 +32,37 @@ JOIN
 ON 
     cart.id_menu = menu.id
 WHERE 
-    orders.status = 'pending'
-    AND orders.user_id IS NOT NULL
-    AND orders.user_id = $user_id";
+    orders.user_id IS NOT NULL
+    AND orders.user_id = $user_id
+ORDER BY 
+    orders.id DESC";
+
 
 $cart_items = read($query);
+
+$grouped_orders = [];
+
+foreach ($cart_items as $item) {
+  $order_id = $item['order_id'];
+
+  if (!isset($grouped_orders[$order_id])) {
+    $grouped_orders[$order_id] = [
+      'order_status' => $item['order_status'],
+      'cart_order_date' => $item['cart_order_date'],
+      'menus' => [],
+      'order_total' => 0,
+    ];
+  }
+
+  $grouped_orders[$order_id]['menus'][] = [
+    'name' => $item['menu_name'],
+    'quantity' => $item['cart_quantity'],
+    'price' => $item['menu_price'],
+  ];
+
+  $grouped_orders[$order_id]['order_total'] += $item['menu_price'] * $item['cart_quantity'];
+}
+
 
 // var_dump($cart_items);
 
@@ -64,6 +90,7 @@ $cart_items = read($query);
         <table class="table table-dark table-striped" style="width: 100%;">
           <thead>
             <tr>
+              <th scope="col">No</th>
               <th scope="col">Produk</th>
               <th scope="col">Total</th>
               <th scope="col">Date order</th>
@@ -71,28 +98,43 @@ $cart_items = read($query);
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($cart_items as $items): ?>
+            <?php $no = 1;
+            foreach ($grouped_orders as $order): ?>
               <tr>
-                <th style="display: flex; align-items: center; gap: 5px;">
-                  <img src="./img/<?= $items['menu_image'] ?>" alt="" style="width: 100px;">
-                  <div class="">
-                    <p><?= $items['menu_name'] ?></p>
-                    <p>Qty : <?= $items['cart_quantity'] ?></p>
-                  </div>
-                </th>
-
-                <td style="align-items: center;">
-                  Rp. 
-                  <?= number_format($items['menu_price'] * $items['cart_quantity'], 0, ',', '.') ?>
+                <td><?= $no++ ?></td>
+                <td>
+                  <?php foreach ($order['menus'] as $menu): ?>
+                    <div>
+                      <?= $menu['name'] ?> (<?= $menu['quantity'] ?> x Rp.
+                      <?= number_format($menu['price'], 0, ',', '.') ?>)
+                    </div>
+                  <?php endforeach ?>
                 </td>
-                <td style="align-items: center;"><?= (new DateTime($items['cart_order_date']))->format('d F Y') ?></td>
-                <td style="align-items: center;">
-                  <p class="btn btn-danger"><?= $items['order_status'] ?></p>
+
+                <td>
+                  Rp. <?= number_format($order['order_total'], 0, ',', '.') ?>
+                </td>
+
+                <td><?= (new DateTime($order['cart_order_date']))->format('d F Y') ?></td>
+
+                <td>
+                  <?php
+                  $status = strtolower($order['order_status']);
+                  $btn_class = match ($status) {
+                    'pending' => 'btn-dabger',
+                    'dimasak' => 'btn-warning',
+                    'selesai' => 'btn-success',
+                    default => 'btn-dark'
+                  };
+                  ?>
+                  <p class="btn <?= $btn_class ?>"><?= ucfirst($status) ?></p>
                 </td>
               </tr>
             <?php endforeach ?>
           </tbody>
+
         </table>
+
       </div>
     </div>
   </div>
