@@ -168,6 +168,12 @@ foreach ($cart_items as $item) {
               <?php endif; ?>
             </div>
           </div>
+          <?php if (!empty($grouped_orders)): ?>
+            <a href="cetak_penjualan.php<?= $tanggalFilter ? '?tanggal=' . $tanggalFilter : '' ?>" target="_blank"
+              class="btn btn-success mb-3">
+              Cetak PDF
+            </a>
+          <?php endif; ?>
         </form>
 
         <table class="table table-dark table-striped" style="width: 100%;">

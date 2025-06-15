@@ -61,22 +61,24 @@ $isLoggedIn = isset($_SESSION['login']) && $_SESSION['login'] === true;
                 <p class="text-lg" style="color: white; font-weight: 600;">Rp.
                   <?= number_format($menu['price'], 0, ',', '.') ?>
                 </p>
-                <p class="card-text overflow-hidden text-ellipsis whitespace-normal"
-                  style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; color: #8e8d94;">
-                  <?= $menu['description'] ?>
+                <p style="color: white;">
+                  Stock <span style="color: #ffbc01;"><?= $menu['stock'] ?></span>
                 </p>
 
                 <!-- Form untuk menambahkan ke keranjang -->
-                <form action="add_to_cart.php" method="POST">
-                  <input type="hidden" name="menu_id" value="<?= $menu['id'] ?>">
-                  <input type="hidden" name="menu_name" value="<?= $menu['name'] ?>">
-                  <input type="hidden" name="menu_price" value="<?= $menu['price'] ?>">
-
-                  <input type="hidden" name="kuantiti" value="1">
-
-
-                  <button type="submit" class="btn btn-primary w-full rounded-3xl">Tambah ke Keranjang</button>
-                </form>
+                <?php if ($menu['stock'] > 0): ?>
+                  <form action="add_to_cart.php" method="POST">
+                    <input type="hidden" name="menu_id" value="<?= $menu['id'] ?>">
+                    <input type="hidden" name="menu_name" value="<?= $menu['name'] ?>">
+                    <input type="hidden" name="menu_price" value="<?= $menu['price'] ?>">
+                    <input type="hidden" name="kuantiti" value="1">
+                    <button type="submit" class="btn btn-primary w-full rounded-3xl">Tambah ke Keranjang</button>
+                  </form>
+                <?php else: ?>
+                  <button onclick="alert('Stok habis!')" class="btn btn-danger w-full rounded-3xl" disabled>
+                    Stok Habis
+                  </button>
+                <?php endif; ?>
               </div>
             <?php endif ?>
           <?php endforeach ?>
@@ -95,21 +97,24 @@ $isLoggedIn = isset($_SESSION['login']) && $_SESSION['login'] === true;
                 <p class="text-lg" style="color: white; font-weight: 600;">Rp.
                   <?= number_format($menu['price'], 0, ',', '.') ?>
                 </p>
-                <p class="card-text overflow-hidden text-ellipsis whitespace-normal"
-                  style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; color: #8e8d94;">
-                  <?= $menu['description'] ?>
+                <p style="color: white;">
+                  Stock <span style="color: #ffbc01;"><?= $menu['stock'] ?></span>
                 </p>
 
                 <!-- Form untuk menambahkan ke keranjang -->
-                <form action="add_to_cart.php" method="POST">
-                  <input type="hidden" name="menu_id" value="<?= $menu['id'] ?>">
-                  <input type="hidden" name="menu_name" value="<?= $menu['name'] ?>">
-                  <input type="hidden" name="menu_price" value="<?= $menu['price'] ?>">
-
-                  <input type="hidden" name="kuantiti" value="1">
-
-                  <button type="submit" class="btn btn-primary w-full rounded-3xl">Tambah ke Keranjang</button>
-                </form>
+                <?php if ($menu['stock'] > 0): ?>
+                  <form action="add_to_cart.php" method="POST">
+                    <input type="hidden" name="menu_id" value="<?= $menu['id'] ?>">
+                    <input type="hidden" name="menu_name" value="<?= $menu['name'] ?>">
+                    <input type="hidden" name="menu_price" value="<?= $menu['price'] ?>">
+                    <input type="hidden" name="kuantiti" value="1">
+                    <button type="submit" class="btn btn-primary w-full rounded-3xl">Tambah ke Keranjang</button>
+                  </form>
+                <?php else: ?>
+                  <button onclick="alert('Stok habis!')" class="btn btn-danger w-full rounded-3xl" disabled>
+                    Stok Habis
+                  </button>
+                <?php endif; ?>
               </div>
             <?php endif ?>
           <?php endforeach ?>
@@ -128,21 +133,24 @@ $isLoggedIn = isset($_SESSION['login']) && $_SESSION['login'] === true;
                 <p class="text-lg" style="color: white; font-weight: 600;">Rp.
                   <?= number_format($menu['price'], 0, ',', '.') ?>
                 </p>
-                <p class="card-text overflow-hidden text-ellipsis whitespace-normal"
-                  style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; color: #8e8d94;">
-                  <?= $menu['description'] ?>
+                <p style="color: white;">
+                  Stock <span style="color: #ffbc01;"><?= $menu['stock'] ?></span>
                 </p>
 
                 <!-- Form untuk menambahkan ke keranjang -->
-                <form action="add_to_cart.php" method="POST">
-                  <input type="hidden" name="menu_id" value="<?= $menu['id'] ?>">
-                  <input type="hidden" name="menu_name" value="<?= $menu['name'] ?>">
-                  <input type="hidden" name="menu_price" value="<?= $menu['price'] ?>">
-
-                  <input type="hidden" name="kuantiti" value="1">
-
-                  <button type="submit" class="btn btn-primary w-full rounded-3xl">Tambah ke Keranjang</button>
-                </form>
+                <?php if ($menu['stock'] > 0): ?>
+                  <form action="add_to_cart.php" method="POST">
+                    <input type="hidden" name="menu_id" value="<?= $menu['id'] ?>">
+                    <input type="hidden" name="menu_name" value="<?= $menu['name'] ?>">
+                    <input type="hidden" name="menu_price" value="<?= $menu['price'] ?>">
+                    <input type="hidden" name="kuantiti" value="1">
+                    <button type="submit" class="btn btn-primary w-full rounded-3xl">Tambah ke Keranjang</button>
+                  </form>
+                <?php else: ?>
+                  <button onclick="alert('Stok habis!')" class="btn btn-danger w-full rounded-3xl" disabled>
+                    Stok Habis
+                  </button>
+                <?php endif; ?>
               </div>
             <?php endif ?>
           <?php endforeach ?>
@@ -214,14 +222,14 @@ $isLoggedIn = isset($_SESSION['login']) && $_SESSION['login'] === true;
           <?php endif ?>
         </div>
         <!-- Total cart -->
-            <?php if($isLoggedIn) : ?>
-        <a href="orderNow.php" class="btn btn-primary w-full rounded-3xl" style="margin-top: 20px;">
-          Pesan Sekarang
-        </a>
-        <?php else : ?>
+        <?php if ($isLoggedIn): ?>
+          <a href="orderNow.php" class="btn btn-primary w-full rounded-3xl" style="margin-top: 20px;">
+            Pesan Sekarang
+          </a>
+        <?php else: ?>
           <a href="./auth/login.php" class="btn btn-primary w-full rounded-3xl" style="margin-top: 20px;">
-          Pesan Sekarang
-        </a>
+            Pesan Sekarang
+          </a>
         <?php endif ?>
       </div>
 
@@ -352,22 +360,6 @@ $isLoggedIn = isset($_SESSION['login']) && $_SESSION['login'] === true;
       });
 
     });
-
-
-
-
-    // Fungsi untuk mengurangi nilai
-    // Seleksi semua tombol decrement
-
-
-
-
-
-
-
-
-
-
 
     console.log(total);
   </script>

@@ -121,10 +121,9 @@ foreach ($cart_items as $item) {
                   <?php
                   $status = strtolower($order['order_status']);
                   $btn_class = match ($status) {
-                    'pending' => 'btn-dabger',
                     'dimasak' => 'btn-warning',
                     'selesai' => 'btn-success',
-                    default => 'btn-dark'
+                    default => 'btn-danger'
                   };
                   ?>
                   <p class="btn <?= $btn_class ?>"><?= ucfirst($status) ?></p>

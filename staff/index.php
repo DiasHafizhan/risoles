@@ -120,7 +120,6 @@ foreach ($cart_items as $item) {
             <td>
               <select class="form-select" data-id="<?= $order_id ?>" onchange="update(this)">
                 <option value="dimasak" <?= $order['order_status'] === 'dimasak' ? 'selected' : '' ?>>Dimasak</option>
-                <option value="pending" <?= $order['order_status'] === 'pending' ? 'selected' : '' ?>>Pending</option>
                 <option value="selesai" <?= $order['order_status'] === 'selesai' ? 'selected' : '' ?>>Selesai</option>
               </select>
 

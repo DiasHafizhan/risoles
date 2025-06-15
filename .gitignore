@@ -24,3 +24,4 @@ dist/
 # Abaikan file dan folder sementara sistem operasi
 .DS_Store  # MacOS
 Thumbs.db  # Windows
+/vendor/

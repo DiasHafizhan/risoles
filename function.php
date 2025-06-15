@@ -255,9 +255,14 @@ function order($data)
     $quantity = $item['kuantitas'];
     $created_at = $item['orderDate'];
 
+    // Simpan item ke order_items
     $insert_item = "INSERT INTO order_items (order_id, menu_id, quantity, created_at)
                     VALUES ('$order_id', '$menu_id', '$quantity', '$created_at')";
     mysqli_query($con, $insert_item);
+
+    // 6. Kurangi stok menu
+    $update_stok = "UPDATE menu SET stock = stock - $quantity WHERE id = '$menu_id' AND stock >= $quantity";
+    mysqli_query($con, $update_stok);
   }
 
   // 5. Update cart
@@ -266,6 +271,7 @@ function order($data)
 
   return true;
 }
+
 
 
 
