@@ -82,11 +82,18 @@ function hapus($id)
 {
   global $con;
 
-  $query = "DELETE FROM menu WHERE id = $id";
-  mysqli_query($con, $query);
+  $id = intval($id);
+
+  // Hapus dulu dari tabel order_items
+  mysqli_query($con, "DELETE FROM order_items WHERE menu_id = $id");
+
+  // Baru hapus dari tabel menu
+  mysqli_query($con, "DELETE FROM menu WHERE id = $id");
 
   return mysqli_affected_rows($con);
 }
+
+
 
 function edit($data)
 {
